@@ -33,6 +33,11 @@ function writeJsonFile(fileName, data){
     })
 }
 
+function readJsonFile(fileName){
+    let jsonData = fs.readFileSync(fileName);
+    let dataInObject = JSON.parse(jsonData);
+    return dataInObject;
+}
 
 let user = readline.question("Login(L or l) / Sign-up(S or s):- ");
 
