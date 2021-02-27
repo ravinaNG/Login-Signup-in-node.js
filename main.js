@@ -39,6 +39,17 @@ function readJsonFile(fileName){
     return dataInObject;
 }
 
+function isExist(userName, jsonData){
+    let index = 0;
+    while(index < jsonData['user'].length){
+        if(userName === jsonData['user'][index]['userName']){
+            return true
+        }
+        index +=1
+    }
+    return false;
+}
+
 let user = readline.question("Login(L or l) / Sign-up(S or s):- ");
 
 if(user === "S" || user === "s"){
