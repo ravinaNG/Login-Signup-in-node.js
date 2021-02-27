@@ -34,20 +34,24 @@ function writeJsonFile(fileName, data){
 }
 
 function readJsonFile(fileName){
-    let jsonData = fs.readFileSync(fileName);
-    let dataInObject = JSON.parse(jsonData);
-    return dataInObject;
+    return responce = new Promise((resolve, reject) => {
+        let jsonData = fs.readFileSync(fileName);
+        let dataInObject = JSON.parse(jsonData);
+        resolve(dataInObject);
+    })
 }
 
 function isExist(userName, jsonData){
-    let index = 0;
-    while(index < jsonData['user'].length){
-        if(userName === jsonData['user'][index]['userName']){
-            return true
+    return responce = new Promise((resolve, reject) => {
+        let index = 0;
+        while(index < jsonData['user'].length){
+            if(userName === jsonData['user'][index]['userName']){
+                resolve(true);
+            }
+            index +=1
         }
-        index +=1
-    }
-    return false;
+        reject(false);
+    })
 }
 
 let user = readline.question("Login(L or l) / Sign-up(S or s):- ");
