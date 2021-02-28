@@ -28,16 +28,22 @@ function paswrdValidation(password){
 function writeJsonFile(fileName, data){
     return responce = new Promise((resolve, reject) => {
         let userData = JSON.stringify(data);
-        fs.writeFileSync(fileName, userData); //'userDetails.json'
-        resolve(`congrats ${data["user"][0]["userName"]} you are Signed Up Successfully`)
+        fs.writeFileSync(fileName, userData); 
+        let lengthOfUserDataArr = data["user"].length
+        resolve(`congrats ${data["user"][lengthOfUserDataArr-1]["userName"]} you are Signed Up Successfully`)
     })
 }
 
 function readJsonFile(fileName){
     return responce = new Promise((resolve, reject) => {
         let jsonData = fs.readFileSync(fileName);
-        let dataInObject = JSON.parse(jsonData);
-        resolve(dataInObject);
+        let bLength = jsonData.byteLength;
+        if(bLength === 0){
+            resolve(1)
+        }else{
+            let dataInObject = JSON.parse(jsonData);
+            resolve(dataInObject);
+        }
     })
 }
 
@@ -71,18 +77,20 @@ if(user === "S" || user === "s"){
                     "password": passwrd1
                 }]
             }
-            let exist = isExist(userName, userDetails);
-            if(exist){
-                console.log("Username already Exist.");
+            if(userDetails === 1){
+                fileName = "userDetails.json"
+                console.log(writeJsonFile(fileName, oneUserDetails));
             }else{
-                if(userDetails === "" || userDetails === []){
-                    fileName = "userDetails.json"
-                    console.log(writeJsonFile(fileName, oneUserDetails));
+                let exist = isExist(userName, userDetails);
+                if(exist){
+                    console.log("Username already exist.");
                 }else{
                     fileName = "userDetails.json";
                     oneUserData = oneUserDetails["user"][0];
-                    userDetails.push(oneUserData);
-                    console.log(writeJsonFile(fileName, userDetails));
+                    userDetails["user"].push(oneUserData);
+                    writeJsonFile(fileName, userDetails).then((congo) =>{
+                        console.log(congo);
+                    })
                 }
             }
         })
