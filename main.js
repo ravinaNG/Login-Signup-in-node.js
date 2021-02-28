@@ -42,16 +42,14 @@ function readJsonFile(fileName){
 }
 
 function isExist(userName, jsonData){
-    return responce = new Promise((resolve, reject) => {
-        let index = 0;
-        while(index < jsonData['user'].length){
-            if(userName === jsonData['user'][index]['userName']){
-                resolve(true);
-            }
-            index +=1
+    let index = 0;
+    while(index < jsonData['user'].length){
+        if(userName === jsonData['user'][index]['userName']){
+            return true;
         }
-        reject(false);
-    })
+        index +=1
+    }
+    return false;
 }
 
 let user = readline.question("Login(L or l) / Sign-up(S or s):- ");
@@ -62,17 +60,31 @@ if(user === "S" || user === "s"){
     const passwrd2 = readline.question("Re enter your password:- ");
     if(passwrd1 === passwrd2){
         paswrdValidation(passwrd1).then(()=>{
-            let userDetails = {
+            let fileName = "userDetails.json"
+            let jsonFileData = readJsonFile(fileName); 
+            return jsonFileData;
+            // return writeJsonFile(fileName, userDetails)
+        }).then((userDetails) => {
+            let oneUserDetails = {
                 "user":[{
                     "userName": userName,
                     "password": passwrd1
                 }]
             }
-            
-            let fileName = "userDetails.json"
-            return writeJsonFile(fileName, userDetails)
-        }).then((message) => {
-            console.log(message);
+            let exist = isExist(userName, userDetails);
+            if(exist){
+                console.log("Username already Exist.");
+            }else{
+                if(userDetails === "" || userDetails === []){
+                    fileName = "userDetails.json"
+                    console.log(writeJsonFile(fileName, oneUserDetails));
+                }else{
+                    fileName = "userDetails.json";
+                    oneUserData = oneUserDetails["user"][0];
+                    userDetails.push(oneUserData);
+                    console.log(writeJsonFile(fileName, userDetails));
+                }
+            }
         })
     }else{
         console.log("Both password are not same.");
