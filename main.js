@@ -28,7 +28,7 @@ function paswrdValidation(password){
 function writeJsonFile(fileName, data){
     return responce = new Promise((resolve, reject) => {
         let userData = JSON.stringify(data);
-        fs.writeFileSync(fileName, userData); 
+        fs.writeFileSync(fileName, userData, 'utf8'); 
         let lengthOfUserDataArr = data["user"].length
         resolve(`congrats ${data["user"][lengthOfUserDataArr-1]["userName"]} you are Signed Up Successfully`)
     })
@@ -69,7 +69,6 @@ if(user === "S" || user === "s"){
             let fileName = "userDetails.json"
             let jsonFileData = readJsonFile(fileName); 
             return jsonFileData;
-            // return writeJsonFile(fileName, userDetails)
         }).then((userDetails) => {
             let oneUserDetails = {
                 "user":[{
@@ -79,7 +78,22 @@ if(user === "S" || user === "s"){
             }
             if(userDetails === 1){
                 fileName = "userDetails.json"
-                console.log(writeJsonFile(fileName, oneUserDetails));
+                console.log("");
+                console.log("******");
+                console.log(`Congrats ${userName} you are signed up successfully.`);
+                console.log("******");
+                console.log("");
+                const description = readline.question("Please describe yourself:- ");
+                const dob = readline.question("Date of Birth:- ");
+                const hobbies = readline.question("Your hobbies:- ");
+                const gender = readline.question("Enter you Gender:- ");
+                oneUserDetails['user'][0]["profile"] = {
+                    "description": description,
+                    "dob": dob,
+                    "hobbies": hobbies,
+                    "gender": gender
+                }
+                writeJsonFile(fileName, oneUserDetails)
             }else{
                 let exist = isExist(userName, userDetails);
                 if(exist){
@@ -87,15 +101,54 @@ if(user === "S" || user === "s"){
                 }else{
                     fileName = "userDetails.json";
                     oneUserData = oneUserDetails["user"][0];
+                    console.log("");
+                    console.log("******");
+                    console.log(`Congrats ${userName} you are signed up successfully.`);
+                    console.log("******");
+                    console.log("");
+                    const description = readline.question("Please describe yourself:- ");
+                    const dob = readline.question("Date of Birth:- ");
+                    const hobbies = readline.question("Your hobbies:- ");
+                    const gender = readline.question("Enter you Gender:- ");
+                    oneUserData["profile"] = {
+                        "description": description,
+                        "dob": dob,
+                        "hobbies": hobbies,
+                        "gender": gender
+                    }
                     userDetails["user"].push(oneUserData);
-                    writeJsonFile(fileName, userDetails).then((congo) =>{
-                        console.log(congo);
-                    })
+                    writeJsonFile(fileName, userDetails)
                 }
             }
         })
     }else{
         console.log("Both password are not same.");
     }
-};
-
+}else if(user === "L" || user === "l"){
+    const userName = readline.question("Please enter your userName:- ");
+    const passwrd = readline.question("Password:- ");
+    let fileName = "userDetails.json";
+    readJsonFile(fileName).then((userDetails) =>{
+        let exist = isExist(userName, userDetails);
+        if(exist){
+            console.log("");
+            console.log("******");
+            console.log(`${userName} you are logged in successfully.`);
+            console.log("******");
+            console.log("");
+            let index = 0;
+            while(index < userDetails['user'].length){
+                if(userName === userDetails['user'][index]['userName']){
+                    console.log(`Username: ${userName}`);
+                    console.log(`Gender: ${userDetails['user'][index]['profile']['gender']}`);
+                    console.log(`Bio: ${userDetails['user'][index]['profile']['description']}`);
+                    console.log(`Hobbies: ${userDetails['user'][index]['profile']['hobbies']}`);
+                    console.log(`Dob: ${userDetails['user'][index]['profile']['dob']}`);
+                }
+                index +=1
+            }
+        }else{
+            console.log("Invalid userName and password.");
+        }
+    })
+}
