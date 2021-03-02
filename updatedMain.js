@@ -157,31 +157,48 @@ if(user === "S" || user === "s"){
     })
 }else if(user === "L" || user === "l"){
     const userName = readline.question("Please enter your userName:- ");
-    const passwrd = readline.question("Password:- ");
+    let passwrd = readline.question("Password:- ");
     let fileName = "userDetails.json";
     readJsonFile(fileName).then((userDetails) =>{
         let exist = isExist(userName, userDetails);
         if(exist){
-            let matchingPaswrd = isThePaswrdSame(userName, passwrd, userDetails)
-            if(matchingPaswrd){
-                console.log("");
-                console.log("******");
-                console.log(`${userName} you are logged in successfully.`);
-                console.log("******");
-                console.log("");
-                let index = 0;
-                while(index < userDetails['user'].length){
-                    if(userName === userDetails['user'][index]['userName']){
-                        console.log(`Username: ${userName}`);
-                        console.log(`Gender: ${userDetails['user'][index]['profile']['gender']}`);
-                        console.log(`Bio: ${userDetails['user'][index]['profile']['description']}`);
-                        console.log(`Hobbies: ${userDetails['user'][index]['profile']['hobbies']}`);
-                        console.log(`Dob: ${userDetails['user'][index]['profile']['dob']}`);
+            let passwrdAttempt = 0
+            while(passwrdAttempt < 3){
+                let matchingPaswrd = isThePaswrdSame(userName, passwrd, userDetails)
+                if(matchingPaswrd){
+                    console.log("");
+                    console.log("******");
+                    console.log(`${userName} you are logged in successfully.`);
+                    console.log("******");
+                    console.log("");
+                    let index = 0;
+                    while(index < userDetails['user'].length){
+                        if(userName === userDetails['user'][index]['userName']){
+                            console.log(`Username: ${userName}`);
+                            console.log(`Gender: ${userDetails['user'][index]['profile']['gender']}`);
+                            console.log(`Bio: ${userDetails['user'][index]['profile']['description']}`);
+                            console.log(`Hobbies: ${userDetails['user'][index]['profile']['hobbies']}`);
+                            console.log(`Dob: ${userDetails['user'][index]['profile']['dob']}`);
+                        }
+                        index +=1
                     }
-                    index +=1
-                }
-            }else{
-                console.log("Wrong Password");
+                    break;
+                }else{
+                    console.log("");
+                    console.log("***");
+                    console.log("Wrong Password, try again.");
+                    console.log(`You have only ${3-passwrdAttempt} attempt.`);
+                    console.log("");
+                    passwrd = readline.question("Password:- ");
+                    passwrdAttempt += 1
+                } 
+            }
+            if(passwrdAttempt === 3){
+                console.log("");
+                console.log("You have completed total attempt.");
+                console.log("Please reset password or try after 30 min.");
+                console.log("ALL THE VERY BEST :)");
+                console.log("");
             }
         }else{
             console.log("Invalid userName and password.");
