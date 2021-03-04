@@ -16,7 +16,7 @@
   - ask userName and password to enter
   - will check if the userName exist and if it's exist it'll check password if the password is same
   - if password is not matching it will give three chance to enter correct password and if not able to enter then will tell try after 30 min.
-  - if userName is exist and password is also matching then it'll tell you have successfully loged in.
+  - if userName exists and password also matching then it'll tell you have successfully loged in.
   - if userName is not matching it'll tell wrong userName.
 
 ## I have used:-
