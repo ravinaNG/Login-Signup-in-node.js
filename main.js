@@ -120,6 +120,8 @@ if(user === "S" || user === "s"){
                     writeJsonFile(fileName, userDetails)
                 }
             }
+        }).catch(()=>{
+            console.log("At least password should contain one special character and one number.");
         })
     }else{
         console.log("Both password are not same.");

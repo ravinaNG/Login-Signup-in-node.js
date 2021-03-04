@@ -15,12 +15,12 @@ function paswrdValidation(password){
                 num +=1;
             }
             if(checking === 0){
-                reject(false); 
+                reject("At least password should contain one special character and one number."); 
             }else{
                 resolve(true);
             }
         }else{
-            reject(false)
+            reject("At least password should contain one special character and one number.");
         }
     })
 }
@@ -108,7 +108,9 @@ if(user === "S" || user === "s"){
                         }
                         writeJsonFile(fileName, oneUserDetails)
                     }
-                })
+                }).catch((errorMessage) =>{
+                    console.log(errorMessage);
+                });
             }else{
                 console.log("Both password are not same.");
             }
@@ -122,14 +124,13 @@ if(user === "S" || user === "s"){
                 if(passwrd1 === passwrd2){
                     paswrdValidation(passwrd1).then((strongPaswrd) =>{
                         if(strongPaswrd){
-                            let oneUserDetails = {
-                                "user":[{
+                            var oneUserData = {
                                     "userName": userName,
                                     "password": passwrd1
-                                }]
+                                }
                             }
                             // fileName = "userDetails.json";
-                            oneUserData = oneUserDetails["user"][0];
+                            // oneUserData = oneUserDetails["user"][0];
                             console.log("");
                             console.log("******");
                             console.log(`Congrats ${userName} you are signed up successfully.`);
@@ -147,7 +148,8 @@ if(user === "S" || user === "s"){
                             }
                             readData["user"].push(oneUserData);
                             writeJsonFile(fileName, readData)
-                        }
+                    }).catch((errMessage) =>{
+                        console.log(errMessage);
                     })
                 }else{
                     console.log("Both password are not same.");
