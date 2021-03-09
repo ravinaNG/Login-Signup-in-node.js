@@ -25,7 +25,7 @@
   - Promise
 
 ## How to run:- 
-  - **userDetails.json** - This is basically a database of my project, no need to do anything with this file, create and keep it as it is.
-  - **main.js** - This is my first file I created as main file only but now this is not the main file, so if you want to run and check the if the project is working fine then this is not that one, don't run this one, you can understand the basic concept of the project by Dry-run.
-  - **updatedMain.js** - This is my main file. So for running and checking the follow of this project you can run this file without any hasitation.
-  - **package-lock.json** - This file automatically got created when I ran the main.js file, I need to search about this file. 
+  - #### **userDetails.json** - This is basically a database of my project, no need to do anything with this file, create and keep it as it is.
+  - #### **main.js** - This is my first file I created as main file only but now this is not the main file, so if you want to run and check the if the project is working fine then this is not that one, don't run this one, you can understand the basic concept of the project by Dry-run.
+  - #### **updatedMain.js** - This is my main file. So for running and checking the follow of this project you can run this file without any hasitation.
+  - #### **package-lock.json** - This file automatically got created when I ran the main.js file, I need to search about this file. 
